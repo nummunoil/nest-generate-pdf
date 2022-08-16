@@ -42,6 +42,15 @@ export class AppController {
         },
         { text: 'google', link: 'http://google.com', pageBreak: 'before' },
         { qr: 'text in QR', foreground: 'green', background: 'white' },
+        {
+          text: 'This paragraph (consisting of a single line) directly sets top and bottom margin to 20',
+          margin: [0, 20],
+        },
+        {
+          text: 'left top right bottom 30 50 20 20',
+          margin: [30, 50, 20, 20],
+        },
+        'hi',
       ],
       defaultStyle: {
         font: 'Helvetica',
