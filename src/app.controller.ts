@@ -1,7 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Header, Res, StreamableFile } from '@nestjs/common';
 import { AppService } from './app.service';
 import * as fs from 'fs';
 import * as PdfPrinter from 'pdfmake';
+import * as htmlToPdf from 'html-pdf-node';
 
 @Controller()
 export class AppController {
@@ -63,5 +64,30 @@ export class AppController {
     pdfDoc.pipe(fs.createWriteStream(file_name));
     pdfDoc.end();
     return { file_name: file_name };
+  }
+
+  @Get('/genPDF')
+  @Header('Content-Type', 'application/pdf')
+  async genPDF(@Res() res) {
+    const templateHtml = fs.readFileSync('html/hi.html', 'utf8');
+    const options = { format: 'A4' };
+    const file = { content: templateHtml };
+
+    try {
+      const buffer = await htmlToPdf.generatePdf(file, options);
+      return res.send(buffer);
+    } catch (error) {
+      console.log(error);
+    }
+
+    // htmlToPdf
+    //   .generatePdf(file, options)
+    //   .then((pdfBuffer) => {
+    //     console.log('PDF Buffer:-', pdfBuffer);
+    //     res.send(pdfBuffer);
+    //   })
+    //   .catch((err) => {
+    //     console.log('Error:-', err);
+    //   });
   }
 }
