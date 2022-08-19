@@ -1,4 +1,4 @@
-import { Controller, Get, Header, Res, StreamableFile } from '@nestjs/common';
+import { Controller, Get, Header, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import * as fs from 'fs';
 import * as PdfPrinter from 'pdfmake';
